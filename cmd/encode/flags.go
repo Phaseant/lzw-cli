@@ -10,8 +10,14 @@ var flags = []cli.Flag{
 		EnvVars:  []string{"TEXT_PATH"},
 	},
 	&cli.StringFlag{
-		Name:    "dictionary-path",
-		Usage:   "path to dictionary file. If not set, default one is used",
-		EnvVars: []string{"DICTIONARY_PATH"},
+		Name:     "dictionary-path",
+		Usage:    "path to dictionary file",
+		Required: true,
+		EnvVars:  []string{"DICTIONARY_PATH"},
+	},
+	&cli.StringFlag{
+		Name:    "output-path",
+		Usage:   "path to output file to be saved",
+		EnvVars: []string{"OUTPUT_PATH"},
 	},
 }

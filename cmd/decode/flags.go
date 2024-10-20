@@ -10,8 +10,9 @@ var flags = []cli.Flag{
 		EnvVars:  []string{"ENCODED_TEXT_PATH"},
 	},
 	&cli.StringFlag{
-		Name:    "dictionary-path",
-		Usage:   "path to dictionary file. If not set, default one is used",
-		EnvVars: []string{"DICTIONARY_PATH"},
+		Name:     "dictionary-path",
+		Usage:    "path to dictionary file. If not set, default one is used",
+		Required: true,
+		EnvVars:  []string{"DICTIONARY_PATH"},
 	},
 }

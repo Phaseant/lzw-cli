@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/phaseant/lzw-cli/cmd/dict"
 	"os"
 
 	"github.com/phaseant/lzw-cli/cmd/decode"
@@ -17,6 +18,7 @@ func main() {
 		Commands: []*cli.Command{
 			&encode.Cmd,
 			&decode.Cmd,
+			&dict.Cmd,
 		},
 		Flags:   []cli.Flag{},
 		Version: "1.0",
