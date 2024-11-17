@@ -49,9 +49,13 @@ func (d *Dictionary) Marshall() ([]byte, error) {
 func populateMap(text []byte) map[string]int {
 	m := make(map[string]int)
 
-	for _, char := range text {
-		if _, ok := m[string(char)]; !ok {
-			m[string(char)] = len(m)
+	// Convert the byte slice to a string to handle UTF-8 decoding
+	textStr := string(text)
+
+	for _, r := range textStr {
+		ch := string(r)
+		if _, ok := m[ch]; !ok {
+			m[ch] = len(m)
 		}
 	}
 

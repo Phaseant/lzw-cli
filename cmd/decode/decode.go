@@ -20,8 +20,6 @@ var Cmd = cli.Command{
 	Action: run,
 }
 
-// todo doesnt work
-
 func run(c *cli.Context) error {
 	input, err := utils.ReadFile(c.String("encoded-text-path"))
 	if err != nil {
@@ -39,8 +37,10 @@ func run(c *cli.Context) error {
 
 	decoded := service.Decode(byteToInt(input), dict)
 
-	zap.S().Info(string(decoded))
+	strRep := string(decoded)
+	strRep = strings.Replace(strRep, "\\n", "\n", -1)
 
+	zap.S().Info(strRep)
 	return nil
 }
 

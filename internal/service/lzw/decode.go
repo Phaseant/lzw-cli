@@ -16,24 +16,39 @@ func (s *service) Decode(encoded []int, dict *dictionary.Dictionary) []byte {
 	var result bytes.Buffer
 	// Initialize the previous code with the first code from the encoded data
 	previousCode := encoded[0]
-	result.WriteString(dict.Reversed()[previousCode])
+	previousString := dict.Reversed()[previousCode]
+	result.WriteString(previousString)
 
 	zap.S().Info(dict.Reversed())
-
-	currentString := dict.Reversed()[previousCode]
 
 	for _, currentCode := range encoded[1:] {
 		var entry string
 		if str, ok := dict.Reversed()[currentCode]; ok {
 			entry = str
 		} else {
-			entry = currentString + string(currentString[0])
+			// Handle the special case where currentCode is not in the dictionary
+			// Use runes to get the first character
+			runes := []rune(previousString)
+			if len(runes) == 0 {
+				// Handle empty previousString to avoid panic
+				zap.S().Error("previousString is empty when handling special case")
+				return nil
+			}
+			entry = previousString + string(runes[0])
 		}
+
 		result.WriteString(entry)
 
-		dict.Add(currentString + string(entry[0]))
+		// Add new entry to the dictionary
+		entryRunes := []rune(entry)
+		if len(entryRunes) == 0 {
+			// Handle empty entry to avoid panic
+			zap.S().Error("entry is empty when adding to dictionary")
+			return nil
+		}
+		dict.Add(previousString + string(entryRunes[0]))
 
-		currentString = entry
+		previousString = entry
 	}
 
 	return result.Bytes()
