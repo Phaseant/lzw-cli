@@ -40,7 +40,7 @@ func run(c *cli.Context) error {
 	var sb strings.Builder
 	if outputPath := c.String("output-path"); outputPath != "" {
 		for _, val := range output {
-			sb.WriteString(fmt.Sprintf("%b", val))
+			sb.WriteString(fmt.Sprintf("%08b ", val))
 		}
 
 		if err := utils.WriteFile(outputPath, []byte(sb.String())); err != nil {

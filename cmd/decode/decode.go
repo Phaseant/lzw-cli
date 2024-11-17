@@ -5,6 +5,9 @@ import (
 	"github.com/phaseant/lzw-cli/internal/service/lzw"
 	"github.com/phaseant/lzw-cli/pkg/utils"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
+	"strconv"
+	"strings"
 )
 
 var Cmd = cli.Command{
@@ -34,17 +37,27 @@ func run(c *cli.Context) error {
 
 	service := lzw.New()
 
-	service.Decode(byteToInt(input), dict)
+	decoded := service.Decode(byteToInt(input), dict)
+
+	zap.S().Info(string(decoded))
 
 	return nil
 }
 
 func byteToInt(b []byte) []int {
-	ints := make([]int, len(b))
+	var res []int
 
-	for i := 0; i < len(b); i++ {
-		ints = append(ints, int(b[i]))
+	splitted := strings.Split(string(b), " ")
+	for _, i := range splitted {
+		if i == "" {
+			continue
+		}
+		num, err := strconv.ParseInt(i, 2, 64)
+		if err != nil {
+			panic(err)
+		}
+		res = append(res, int(num))
 	}
 
-	return ints
+	return res
 }
