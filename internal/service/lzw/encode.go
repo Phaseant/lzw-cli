@@ -19,21 +19,22 @@ func (s *service) Encode(text []byte, dict *dictionary.Dictionary) []int {
 		// if this symbol is not in dict
 		if _, ok := dict.Dictionary()[q.String()]; !ok {
 			dict.Add(q.String())
-
-			// adding prev to result
-			q.Dequeue()
-			result = append(result, dict.Dictionary()[q.String()])
-
-			// starting from cur symbol
-			q.Clean()
-			q.Enqueue(c)
 		}
+
+		// adding prev to result
+		q.Dequeue()
+		result = append(result, dict.Dictionary()[q.String()])
+		//zap.S().Infof("res: %v, sym: %v", result, q.String())
+
+		// starting from cur symbol
+		q.Clean()
+		q.Enqueue(c)
 	}
 
-	// adding last
-	if q.Len() != 0 {
-		result = append(result, dict.Dictionary()[q.String()])
-	}
+	//// adding last
+	//if q.Len() != 0 {
+	//	result = append(result, dict.Dictionary()[q.String()])
+	//}
 
 	return result
 }
