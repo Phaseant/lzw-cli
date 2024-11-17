@@ -35,12 +35,19 @@ func run(c *cli.Context) error {
 
 	service := lzw.New()
 
-	decoded := service.Decode(byteToInt(input), dict)
+	intInput := byteToInt(input)
+
+	decoded := service.Decode(intInput, dict)
 
 	strRep := string(decoded)
 	strRep = strings.Replace(strRep, "\\n", "\n", -1)
 
-	zap.S().Info(strRep)
+	zap.S().Infof("Decoded text: %v", strRep)
+
+	sizeOfInput := len(intInput)
+	sizeOfOutput := len(strRep)
+
+	zap.S().Infof("Size of encoded: %v, decoded: %v, compressed: %.2f%%", sizeOfInput, sizeOfOutput, float64(sizeOfInput)/float64(sizeOfOutput)*100)
 	return nil
 }
 

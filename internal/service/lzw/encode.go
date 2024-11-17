@@ -63,7 +63,6 @@ func (s *service) Encode(text []byte, dict *dictionary.Dictionary) []int {
 		// adding prev to result
 		q.Dequeue()
 		result = append(result, dict.Dictionary()[q.String()])
-		//zap.S().Infof("res: %v, sym: %v", result, q.String())
 
 		// starting from cur symbol
 		q.Clean()

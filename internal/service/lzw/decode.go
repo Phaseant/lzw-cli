@@ -11,15 +11,11 @@ func (s *service) Decode(encoded []int, dict *dictionary.Dictionary) []byte {
 		return nil
 	}
 
-	zap.S().Info(encoded)
-
 	var result bytes.Buffer
 	// Initialize the previous code with the first code from the encoded data
 	previousCode := encoded[0]
 	previousString := dict.Reversed()[previousCode]
 	result.WriteString(previousString)
-
-	zap.S().Info(dict.Reversed())
 
 	for _, currentCode := range encoded[1:] {
 		var entry string
@@ -53,23 +49,3 @@ func (s *service) Decode(encoded []int, dict *dictionary.Dictionary) []byte {
 
 	return result.Bytes()
 }
-
-//func (s *service) Decode(encoded []int, dict *dictionary.Dictionary) []byte {
-//	if len(encoded) == 0 {
-//		return nil
-//	}
-//
-//	var result bytes.Buffer
-//
-//	for _, code := range encoded {
-//		entry, ok := dict.Reversed()[code]
-//		if !ok {
-//			// Handle the error appropriately, e.g., return an error or skip
-//			zap.S().Errorf("Code %d not found in dictionary", code)
-//			return nil
-//		}
-//		result.WriteString(entry)
-//	}
-//
-//	return result.Bytes()
-//}

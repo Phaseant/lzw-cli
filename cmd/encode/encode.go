@@ -48,6 +48,6 @@ func run(c *cli.Context) error {
 		}
 	}
 
-	zap.S().Info(output)
+	zap.S().Infof("Encoded text: %v", output)
 	return nil
 }
