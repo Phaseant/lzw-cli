@@ -8,7 +8,7 @@ type (
 		length     int
 	}
 	node struct {
-		value byte
+		value string
 		next  *node
 	}
 )
@@ -17,9 +17,9 @@ func New() *Queue {
 	return &Queue{nil, nil, 0}
 }
 
-func (q *Queue) Dequeue() byte {
+func (q *Queue) Dequeue() string {
 	if q.length == 0 {
-		return 0
+		return "0"
 	}
 	n := q.start
 	if q.length == 1 {
@@ -32,7 +32,7 @@ func (q *Queue) Dequeue() byte {
 	return n.value
 }
 
-func (q *Queue) Enqueue(value byte) {
+func (q *Queue) Enqueue(value string) {
 	n := &node{value, nil}
 	if q.length == 0 {
 		q.start = n

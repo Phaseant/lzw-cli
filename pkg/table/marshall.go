@@ -3,13 +3,15 @@ package table
 import (
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 func Marshall(m map[string]int) ([]byte, error) {
 	var b bytes.Buffer
 
 	for k, v := range m {
-		b.WriteString(writePair(k, v))
+		escapedKey := strings.ReplaceAll(k, "\n", "\\n")
+		b.WriteString(writePair(escapedKey, v))
 	}
 
 	return b.Bytes(), nil
