@@ -4,14 +4,14 @@ This is a cli for Lempel–Ziv–Welch algorithm, made for my information coding
 
 ## Usage
 
-**Make dict**
+`$ make dict`
 
 Generate base dictionary for text
 
-**Make encode**
+`$ make encode`
 
 Generate an encoded text sequence. Dict have to be generated before.
 
-**Make decode**
+`$ make decode`
 
 Decode encoded text using base dictionary. All missing fragments are generated in process.
