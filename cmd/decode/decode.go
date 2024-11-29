@@ -55,19 +55,19 @@ func run(c *cli.Context) error {
 	return nil
 }
 
-func byteToInt(b []byte) []int {
-	var res []int
+func byteToInt(b []byte) []uint64 {
+	var res []uint64
 
 	splitted := strings.Split(string(b), " ")
 	for _, i := range splitted {
 		if i == "" {
 			continue
 		}
-		num, err := strconv.ParseInt(i, 2, 64)
+		num, err := strconv.ParseUint(i, 2, 64)
 		if err != nil {
 			panic(err)
 		}
-		res = append(res, int(num))
+		res = append(res, num)
 	}
 
 	return res

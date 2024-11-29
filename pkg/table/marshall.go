@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Marshall(m map[string]int) ([]byte, error) {
+func Marshall(m map[string]uint64) ([]byte, error) {
 	var b bytes.Buffer
 
 	sorted := SortedByKeys(m)
@@ -21,7 +21,7 @@ func Marshall(m map[string]int) ([]byte, error) {
 }
 
 type Item struct {
-	Key int
+	Key uint64
 	Val string
 }
 
@@ -40,7 +40,7 @@ func (s SortedList) String() string {
 	return sb.String()
 }
 
-func SortedByKeys(m map[string]int) SortedList {
+func SortedByKeys(m map[string]uint64) SortedList {
 	sorted := make([]Item, 0, len(m))
 	for k, v := range m {
 		sorted = append(sorted, Item{Key: v, Val: k})

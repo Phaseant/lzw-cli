@@ -8,7 +8,7 @@ import (
 )
 
 type Dictionary struct {
-	m map[string]int
+	m map[string]uint64
 }
 
 func New(input []byte) (*Dictionary, error) {
@@ -25,7 +25,7 @@ func Open(table []byte) (*Dictionary, error) {
 	return &Dictionary{m: m}, nil
 }
 
-func (d *Dictionary) Dictionary() map[string]int {
+func (d *Dictionary) Dictionary() map[string]uint64 {
 	return d.m
 }
 
@@ -34,11 +34,11 @@ func (d *Dictionary) Len() int {
 }
 
 func (d *Dictionary) Add(key string) {
-	d.m[key] = len(d.m)
+	d.m[key] = uint64(len(d.m))
 }
 
-func (d *Dictionary) Reversed() map[int]string {
-	reversed := make(map[int]string)
+func (d *Dictionary) Reversed() map[uint64]string {
+	reversed := make(map[uint64]string)
 
 	for k, v := range d.m {
 		reversed[v] = k
@@ -51,8 +51,8 @@ func (d *Dictionary) Marshall() ([]byte, error) {
 	return table2.Marshall(d.m)
 }
 
-func populateMap(text []byte) map[string]int {
-	m := make(map[string]int)
+func populateMap(text []byte) map[string]uint64 {
+	m := make(map[string]uint64)
 
 	// Convert the byte slice to a string to handle UTF-8 decoding
 	textStr := string(text)
@@ -60,7 +60,7 @@ func populateMap(text []byte) map[string]int {
 	for _, r := range textStr {
 		ch := string(r)
 		if _, ok := m[ch]; !ok {
-			m[ch] = len(m)
+			m[ch] = uint64(len(m))
 		}
 	}
 
@@ -68,7 +68,7 @@ func populateMap(text []byte) map[string]int {
 }
 
 type Item struct {
-	Key int
+	Key uint64
 	Val string
 }
 

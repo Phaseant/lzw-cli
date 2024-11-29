@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-func Unmarshall(buf []byte) (map[string]int, error) {
-	m := make(map[string]int)
+func Unmarshall(buf []byte) (map[string]uint64, error) {
+	m := make(map[string]uint64)
 
 	r := bytes.NewReader(buf)
 
@@ -19,7 +19,7 @@ func Unmarshall(buf []byte) (map[string]int, error) {
 	for scan.Scan() {
 		k, v := mapMap(scan.Text())
 
-		intVal, err := strconv.Atoi(v)
+		intVal, err := strconv.ParseUint(v, 10, 64)
 		if err != nil {
 			return nil, fmt.Errorf("failed to unmarshal value %q", v)
 		}

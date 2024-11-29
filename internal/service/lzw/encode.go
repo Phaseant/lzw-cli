@@ -34,12 +34,12 @@ import (
 //	return result
 //}
 
-func (s *service) Encode(text []byte, dict *dictionary.Dictionary) []int {
+func (s *service) Encode(text []byte, dict *dictionary.Dictionary) []uint64 {
 	if len(text) == 0 {
 		return nil
 	}
 
-	var result []int
+	var result []uint64
 	q := queue.New() // Assume the queue can handle strings
 
 	// Convert the text to a string to handle UTF-8 characters

@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (s *service) Decode(encoded []int, dict *dictionary.Dictionary) []byte {
+func (s *service) Decode(encoded []uint64, dict *dictionary.Dictionary) []byte {
 	if len(encoded) == 0 {
 		return nil
 	}
