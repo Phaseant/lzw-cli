@@ -32,6 +32,9 @@ func run(c *cli.Context) error {
 	}
 
 	dict, err := dictionary.Open(dictRaw)
+	if err != nil {
+		return err
+	}
 
 	service := lzw.New()
 
@@ -43,6 +46,7 @@ func run(c *cli.Context) error {
 	strRep = strings.Replace(strRep, "\\n", "\n", -1)
 
 	zap.S().Infof("Decoded text: %v", strRep)
+	zap.S().Infof("Full dictionary: %v", dict.SortedByKeys())
 
 	sizeOfInput := len(intInput)
 	sizeOfOutput := len(strRep)

@@ -1,6 +1,11 @@
 package dictionary
 
-import table2 "github.com/phaseant/lzw-cli/pkg/table"
+import (
+	"fmt"
+	table2 "github.com/phaseant/lzw-cli/pkg/table"
+	"sort"
+	"strings"
+)
 
 type Dictionary struct {
 	m map[string]int
@@ -60,4 +65,37 @@ func populateMap(text []byte) map[string]int {
 	}
 
 	return m
+}
+
+type Item struct {
+	Key int
+	Val string
+}
+
+func (i Item) String() string {
+	return fmt.Sprintf("%d: %s", i.Key, i.Val)
+}
+
+type SortedList []Item
+
+func (s SortedList) String() string {
+	var sb strings.Builder
+	sb.WriteString("\n")
+	for _, i := range s {
+		sb.WriteString(i.String() + "\n")
+	}
+	return sb.String()
+}
+
+func (d *Dictionary) SortedByKeys() SortedList {
+	sorted := make([]Item, 0, len(d.m))
+	for k, v := range d.m {
+		sorted = append(sorted, Item{Key: v, Val: k})
+	}
+
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].Key < sorted[j].Key
+	})
+
+	return sorted
 }
