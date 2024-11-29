@@ -33,7 +33,7 @@ func run(c *cli.Context) error {
 		return err
 	}
 
-	zap.S().Infof("Your dictionary:\n %v", string(raw))
+	zap.S().Infof("Your dictionary:\n%v", string(raw))
 
 	if err := utils.WriteFile(c.String("dictionary-path"), raw); err != nil {
 		return err
