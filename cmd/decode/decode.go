@@ -1,6 +1,7 @@
 package decode
 
 import (
+	"fmt"
 	"github.com/phaseant/lzw-cli/internal/dictionary"
 	"github.com/phaseant/lzw-cli/internal/service/lzw"
 	"github.com/phaseant/lzw-cli/pkg/utils"
@@ -48,10 +49,10 @@ func run(c *cli.Context) error {
 	zap.S().Infof("Decoded text: %v", strRep)
 	zap.S().Infof("Full dictionary: %v", dict.SortedByKeys())
 
-	sizeOfInput := len(intInput)
-	sizeOfOutput := len(strRep)
+	sizeOfInput := len(input)
+	sizeOfOutput := outputInBinary(strRep)
 
-	zap.S().Infof("Size of encoded: %v, decoded: %v, compressed: %.2f%%", sizeOfInput, sizeOfOutput, float64(sizeOfInput)/float64(sizeOfOutput)*100)
+	zap.S().Infof("Size of encoded: %v, decoded: %v, compressed: %.2f%%", sizeOfInput, sizeOfOutput, (1-float64(sizeOfInput)/float64(sizeOfOutput))*100)
 	return nil
 }
 
@@ -63,7 +64,8 @@ func byteToInt(b []byte) []uint64 {
 		if i == "" {
 			continue
 		}
-		num, err := strconv.ParseUint(i, 2, 64)
+
+		num, err := strconv.ParseUint(i, 2, len(i)*8)
 		if err != nil {
 			panic(err)
 		}
@@ -71,4 +73,18 @@ func byteToInt(b []byte) []uint64 {
 	}
 
 	return res
+}
+
+func outputInBinary(output string) int {
+	var sb strings.Builder
+	for _, val := range output {
+		t := fmt.Sprintf("%08b ", val)
+		re := strings.TrimLeft(t, "0")
+		if re == " " {
+			re = "0 "
+		}
+		sb.WriteString(re)
+	}
+
+	return len(sb.String())
 }
