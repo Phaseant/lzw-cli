@@ -22,8 +22,6 @@ func (s *service) Decode(encoded []uint64, dict *dictionary.Dictionary) []byte {
 		if str, ok := dict.Reversed()[currentCode]; ok {
 			entry = str
 		} else {
-			// Handle the special case where currentCode is not in the dictionary
-			// Use runes to get the first character
 			runes := []rune(previousString)
 			if len(runes) == 0 {
 				// Handle empty previousString to avoid panic

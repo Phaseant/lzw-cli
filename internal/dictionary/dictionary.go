@@ -34,7 +34,9 @@ func (d *Dictionary) Len() int {
 }
 
 func (d *Dictionary) Add(key string) {
-	d.m[key] = uint64(len(d.m))
+	if _, ok := d.m[key]; !ok {
+		d.m[key] = uint64(len(d.m))
+	}
 }
 
 func (d *Dictionary) Reversed() map[uint64]string {
@@ -73,7 +75,7 @@ type Item struct {
 }
 
 func (i Item) String() string {
-	return fmt.Sprintf("%d: %s", i.Key, i.Val)
+	return fmt.Sprintf("%d: '%s'", i.Key, i.Val)
 }
 
 type SortedList []Item
@@ -82,8 +84,9 @@ func (s SortedList) String() string {
 	var sb strings.Builder
 	sb.WriteString("\n")
 	for _, i := range s {
-		sb.WriteString(i.String() + "\n")
+		sb.WriteString(i.String() + ", ")
 	}
+	sb.WriteString("\n")
 	return sb.String()
 }
 
